@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+#include <unistd.h> // usleep
+
 namespace ft232gpio
 {
 
@@ -75,6 +77,23 @@ bool FT232::write_data(const uint8_t *buf, int size)
   if (f < 0)
   {
     std::cerr << "write_data failed: " << ::ftdi_get_error_string(_ftdi) << std::endl;
+    return false;
+  }
+  return true;
+}
+
+bool FT232::read_data(uint8_t *buf)
+{
+  // bits = which bits to read
+  ::ftdi_set_bitmode(_ftdi, 0x00, BITMODE_BITBANG);
+  usleep(10);
+  auto f = ::ftdi_read_pins(_ftdi, buf);
+  usleep(10);
+  ::ftdi_set_bitmode(_ftdi, 0xff, BITMODE_BITBANG);
+  usleep(10);
+  if (f < 0)
+  {
+    std::cerr << "read_data failed: " << ::ftdi_get_error_string(_ftdi) << std::endl;
     return false;
   }
   return true;

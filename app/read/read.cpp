@@ -14,34 +14,35 @@
  * limitations under the License.
  */
 
-#ifndef __FT232GPIO_FT232_H__
-#define __FT232GPIO_FT232_H__
+#include <ft232gpio/ft232.h>
 
-#include <cstdint>
+#include <cstdio>
 
-#include <ftdi.h>
+#include <unistd.h>
 
-namespace ft232gpio
+void msleep(unsigned int msecs)
 {
+  //
+  usleep(msecs * 1000);
+}
 
-class FT232
+int main(int argc, char **argv)
 {
-public:
-  FT232();
-  virtual ~FT232();
+  ft232gpio::FT232 ft232;
 
-public:
-  bool init(void);
-  void release(void);
+  if (!ft232.init())
+    return -1;
 
-public:
-  bool write_data(const uint8_t *buf, int size);
-  bool read_data(uint8_t *buf);
+  uint8_t data;
 
-private:
-  struct ftdi_context *_ftdi = nullptr;
-};
+  for (int i = 0; i < 100; ++i)
+  {
+    msleep(100);
+    ft232.read_data(&data);
+    printf("Data 0x%02x\r\n", data);
+  }
 
-} // namespace ft232gpio
+  ft232.release();
 
-#endif // __FT232GPIO_FT232_H__
+  return 0;
+}
