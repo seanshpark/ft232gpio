@@ -1,0 +1,24 @@
+BUILD_OUTPUT=build/debug
+
+all: debug
+
+prepare:
+	mkdir -p build
+	mkdir -p $(BUILD_OUTPUT)
+
+cfg:
+	cmake -B$(BUILD_OUTPUT) -H./ -DCMAKE_BUILD_TYPE=debug
+
+debug:
+	cmake --build $(BUILD_OUTPUT)
+
+format:
+	bash tools/format
+
+# applications test launch
+
+appblink:
+	./build/debug/app/blink/blink
+
+appfnd4:
+	./build/debug/app/fnd4/fnd4
