@@ -23,6 +23,7 @@
 
 void msleep(unsigned int msecs)
 {
+  //
   usleep(msecs * 1000);
 }
 
@@ -46,8 +47,8 @@ int main(int argc, char **argv)
       msleep(100);
     }
 
-  std::random_device rd; 
-  std::mt19937 mt(rd()); 
+  std::random_device rd;
+  std::mt19937 mt(rd());
   std::uniform_int_distribution<uint8_t> dist(0, 0x7f);
 
   uint8_t data[4];

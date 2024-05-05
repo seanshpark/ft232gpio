@@ -25,7 +25,7 @@
 // NOTE TM1637 CLK/DIO is like I2C but quite different
 
 #define PIN_CLOCK 0x08 // CTS of FT232
-#define PIN_DIO   0x10 // DTR of FT232
+#define PIN_DIO 0x10   // DTR of FT232
 
 static const uint32_t CLOCK_DELAY = 20;
 static const uint32_t DATA_DELAY = 20;

@@ -175,7 +175,7 @@ fi
 
 if [[ -z "${CRCHECK}" ]] && [[ ! -n "${DIFF}" ]] && [[ ${INVALID_EXIT} -eq 0 ]]; then
   echo "[PASSED] Format checker succeed."
-  return
+  exit 0
 fi
 
 # Something went wrong

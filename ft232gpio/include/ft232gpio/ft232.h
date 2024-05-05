@@ -24,7 +24,8 @@
 namespace ft232gpio
 {
 
-class FT232 {
+class FT232
+{
 public:
   FT232();
   virtual ~FT232();
