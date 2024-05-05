@@ -2,6 +2,7 @@
 
 set(SRCS
     src/ft232.cpp
+    src/tm1637.cpp
 )
 
 add_library(ft232gpio STATIC ${SRCS})
