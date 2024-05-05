@@ -40,6 +40,11 @@ int main(int argc, char **argv)
   sleep(1);
 
   int i, j;
+  uint8_t data[4];
+  for (i = 0; i < 4; ++i)
+    data[i] = 0xff;
+  tm1637.digits(data, true);
+
   for (j = 0; j < 3; ++j)
     for (i = 1; i <= 8; ++i)
     {
@@ -51,7 +56,6 @@ int main(int argc, char **argv)
   std::mt19937 mt(rd());
   std::uniform_int_distribution<uint8_t> dist(0, 0x7f);
 
-  uint8_t data[4];
   for (j = 0; j < 25; ++j)
   {
     for (i = 0; i < 4; ++i)
