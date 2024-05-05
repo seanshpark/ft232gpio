@@ -15,3 +15,4 @@ message(STATUS "FTDI1_LIBRARIES=${FTDI1_LIBRARIES}")
 message(STATUS "FTDI1_LINK_LIBRARIES=${FTDI1_LINK_LIBRARIES}")
 
 add_subdirectory(ft232gpio)
+add_subdirectory(app)
