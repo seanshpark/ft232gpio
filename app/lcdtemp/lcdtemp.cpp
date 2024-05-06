@@ -84,14 +84,6 @@ void make_freemem(char *buff, int32_t leng)
       break;
   }
   strncpy(buff, num, leng);
-  num = buff;
-  while (*num)
-  {
-    if (*num != ' ')
-      num++;
-    else
-      break;
-  }
   long lv = atol(buff) / 1024;
   snprintf(buff, leng, "%ld MB", lv);
 }
