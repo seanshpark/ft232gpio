@@ -32,6 +32,30 @@
 
 static bool _do_loop = true;
 
+enum class CPU
+{
+  ARCH_UNKNOWN = 0,
+  ARCH_X86_64 = 1,
+  ARCH_AARCH64 = 2,
+};
+
+static CPU _cpu_arch = CPU::ARCH_UNKNOWN;
+
+void set_cpu_arch(void)
+{
+#ifdef __aarch64__
+  _cpu_arch = CPU::ARCH_AARCH64;
+#endif
+#ifdef __x86_64__
+  _cpu_arch = ARCH_X86_64;
+#endif
+  if (_cpu_arch == CPU::ARCH_UNKNOWN)
+  {
+    std::cerr << "Unknown CPU architecture" << std::endl;
+    std::abort();
+  }
+}
+
 void signal_handler(int sig)
 {
   printf("Ctrl+Break!\r\n");
@@ -54,7 +78,16 @@ void make_time(char *buff, int32_t leng)
 
 void make_temp(char *buff, int32_t leng)
 {
-  const char *path = "/sys/class/thermal/thermal_zone0/temp";
+  const char *path = nullptr;
+  switch (_cpu_arch)
+  {
+    case CPU::ARCH_AARCH64:
+      path = "/sys/class/thermal/thermal_zone0/temp";
+      break;
+    case CPU::ARCH_X86_64:
+      path = "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input";
+      break;
+  }
   std::ifstream ft(path, std::ios::in | std::ios::binary);
 
   std::string line;
@@ -115,6 +148,7 @@ void show_lcd1602(ft232gpio::LCD1602 &lcd1602)
 int main(int argc, char **argv)
 {
   signal(SIGINT, signal_handler);
+  set_cpu_arch();
 
   ft232gpio::FT232 ft232;
   if (!ft232.init())
