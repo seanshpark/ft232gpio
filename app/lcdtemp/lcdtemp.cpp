@@ -47,7 +47,7 @@ void set_cpu_arch(void)
   _cpu_arch = CPU::ARCH_AARCH64;
 #endif
 #ifdef __x86_64__
-  _cpu_arch = ARCH_X86_64;
+  _cpu_arch = CPU::ARCH_X86_64;
 #endif
   if (_cpu_arch == CPU::ARCH_UNKNOWN)
   {
@@ -85,7 +85,7 @@ void make_temp(char *buff, int32_t leng)
       path = "/sys/class/thermal/thermal_zone0/temp";
       break;
     case CPU::ARCH_X86_64:
-      path = "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input";
+      path = "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input";
       break;
   }
   std::ifstream ft(path, std::ios::in | std::ios::binary);

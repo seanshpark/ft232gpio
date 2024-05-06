@@ -31,6 +31,8 @@
 #define I2C_DELAY_WAIT 1
 #define I2C_RETRY 1000
 
+#define IGNORE_READ 1
+
 namespace ft232gpio
 {
 
@@ -103,20 +105,30 @@ void I2C::_clear_scl(void)
 
 uint8_t I2C::_read_scl(void)
 {
+#if IGNORE_READ
+  _delay();
+  return PIN_SCL;
+#else
   uint8_t data;
   if (!_ft232->read_data(&data))
     return 0;
   // printf("Read SCL: 0x%02x\r\n", (uint32_t)data);
   return data & PIN_SCL;
+#endif
 }
 
 uint8_t I2C::_read_sda(void)
 {
+#if IGNORE_READ
+  _delay();
+  return PIN_SDA;
+#else
   uint8_t data;
   if (!_ft232->read_data(&data))
     return 0;
   // printf("Read SDA: 0x%02x\r\n", (uint32_t)data);
   return data & PIN_SDA;
+#endif
 }
 
 void I2C::_dummy_clock(void)
