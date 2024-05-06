@@ -84,6 +84,16 @@ void make_freemem(char *buff, int32_t leng)
       break;
   }
   strncpy(buff, num, leng);
+  num = buff;
+  while (*num)
+  {
+    if (*num != ' ')
+      num++;
+    else
+      break;
+  }
+  long lv = atol(buff) / 1024;
+  snprintf(buff, leng, "%ld MB", lv);
 }
 
 void show_lcd1602(ft232gpio::LCD1602 &lcd1602)
@@ -123,8 +133,8 @@ int main(int argc, char **argv)
 
   ft232gpio::LCD1602 lcd1602;
   lcd1602.init(&i2c);
-  lcd1602.cursor(true);
-  lcd1602.blink(true);
+  lcd1602.cursor(false);
+  lcd1602.blink(false);
 
   show_lcd1602(lcd1602);
 
